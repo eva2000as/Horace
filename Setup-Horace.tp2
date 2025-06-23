@@ -1,0 +1,239 @@
+BACKUP ~Horace\backup~
+AUTHOR ~Seifer~
+
+VERSION ~v1.74~
+
+ALWAYS
+ACTION_IF GAME_IS ~bgee bg2ee eet~ OR FILE_EXISTS_IN_GAME BD1000.are THEN BEGIN
+
+	INCLUDE ~Horace/lib/fl#add_kit_ee.tpa~
+	END
+  ACTION_IF NOT VARIABLE_IS_SET bg2_chapter THEN BEGIN // check to make this happen only once per install
+
+    ACTION_IF GAME_IS ~eet~ BEGIN
+      OUTER_SET bg2_chapter = 12
+    END ELSE BEGIN
+      OUTER_SET bg2_chapter = 0
+    END
+    OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
+      OUTER_SET bg2_chapter = bg2_chapter + 1
+      OUTER_SPRINT name_source ~bg2_chapter_%i%~
+      OUTER_SET EVAL ~%name_source%~ = bg2_chapter
+END
+END
+END
+// Readme displayed at the beginning, not the end, now
+README ~Horace/readme_HR.HTML~
+
+AUTO_TRA ~Horace/TRA/%s~
+
+LANGUAGE ~English~
+         ~English~
+         ~Horace/TRA/English/Setup.tra~
+
+LANGUAGE ~Russian (translation by AERIE.ru)~
+         ~Russian~
+         ~Horace/TRA/Russian/Setup.tra~
+
+LANGUAGE ~Francais (traduit par Le Marquis des d'Oghmatiques)~
+         ~French~
+         ~Horace/TRA/French/Setup.tra~
+
+LANGUAGE ~Italian (translation by Ilot)~
+         ~Italian~
+         ~Horace/TRA/Italian/Setup.tra~
+
+LANGUAGE ~Schinese (translation by eva2000as)~
+         ~Schinese~
+         ~Horace/TRA/Schinese/Setup.tra~
+		 
+BEGIN @0
+
+//\\//\\//\\//\\//\\//\\//\\//\
+// ~~ Compiling dialogues ~~ \\
+////\\//\\//\\//\\//\\//\\//\//
+COMPILE ~Horace\Dialogue\Horace.d~  //Still being developed.
+COMPILE ~Horace\Dialogue\BHorace.d~ //Still being developed
+COMPILE ~Horace\Dialogue\HoraceJ.d~ //Still being developed
+COMPILE ~Horace\Dialogue\HoraceP.d~
+
+//\\//\\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+// ~~ Script Compilation and transfer ~~   //
+////\\//\\//\\//\\//\\//\\//\//\\//\\//\\//\\
+
+COPY ~Horace/Scripts/AR2013.bcs~ ~override/AR2013.bcs~ //still being developed.
+COPY ~Horace/Scripts/Horace.bcs~ ~override/Horace.bcs~ //still being developed.
+COPY ~Horace/Scripts/Horfight.bcs~ ~override/Horfight.bcs~ //still being developed.
+EXTEND_TOP ~Horace.bcs~ ~Horace\Scripts\HorFight.bcs~//Battle AI
+
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+//  ~~ Kit Appending, more in hope then expectation! ~~             //
+////\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+BEGIN @1
+ADD_KIT ~SeifHL~
+~SeifHL                   1           1           1           1           1 1           1           1~
+~SeifHL   2 2 0 0 2 2 2 0 2 2 2 2 0 2 0 2 2 2 0 0 2 2 0 0 0 0 3 3 2 3 3 0 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5~
+~SeifHL                   0       0       13      0       14      13~
+~SeifHL                   0       0       0       0       0       0~
+~SeifHL                   0       0       0       0       0       0~
+~SeifHL                   0       0       0       0       0       0~
+~SeifHL                   0       0       0       0       0       0      1       0       0~
+~SeifHL                   0       0       0       0       0       0~
+~Horace/2da/SeifHL.2da~
+~~
+~ 0x00040000	2~
+~Sei~
+~CHAN09 * HELM07 BAG26 RING06 RING31 * BOOT01 AMUL19 BRAC10 BELT06 AROW11,40 BULL03,40 BOLT06,40 POTN52,5 POTN04,2 POTN14,5 HAMM07 SW1H27 STAF08~
+SAY @29
+SAY @29
+SAY @2
+
+LAF fl#add_kit_ee STR_VAR kit_name = SeifHL END
+
+//Progression Table
+COPY ~Horace/2da/SeifHL.2da~ ~override/SeifHL.2da~
+//High Level Ability Table
+COPY ~Horace/2da/LUSei.2da~ ~override/LUSei.2da~
+COPY ~Horace/Spells/Hor01.spl~  ~override/Hor01.spl~
+  SAY NAME1 @3
+  SAY NAME2 @3
+  SAY UNIDENTIFIED_DESC @4
+  SAY DESC @4
+
+COPY ~Horace/Spells/Hor02.spl~  ~override/Hor02.spl~
+  SAY NAME1 @5
+  SAY NAME2 @5
+  SAY UNIDENTIFIED_DESC @6
+  SAY DESC @6
+
+COPY ~Horace/Spells/Hor03.spl~  ~override/Hor03.spl~
+  SAY NAME1 @7
+  SAY NAME2 @7
+  SAY UNIDENTIFIED_DESC @8
+  SAY DESC @8
+
+COPY ~Horace/Spells/Hor04.spl~  ~override/Hor04.spl~
+  SAY NAME1 @9
+  SAY NAME2 @9
+  SAY UNIDENTIFIED_DESC @10
+  SAY DESC @10
+
+COPY ~Horace/Spells/Hor05.spl~  ~override/Hor05.spl~
+  SAY NAME1 @11
+  SAY NAME2 @11
+  SAY UNIDENTIFIED_DESC @12
+  SAY DESC @12
+
+COPY ~Horace/Spells/Hor06.spl~  ~override/Hor06.spl~ //Has seperate file
+  SAY NAME1 @13
+  SAY NAME2 @14
+  SAY UNIDENTIFIED_DESC @15
+  SAY DESC @15
+
+COPY ~Horace/Spells/Hor07.spl~  ~override/Hor07.spl~ //Has seperate file
+  SAY NAME1 @16
+  SAY NAME2 @16
+  SAY UNIDENTIFIED_DESC @17
+  SAY DESC @18
+
+COPY ~Horace/Spells/Horc08.spl~  ~override/Horc08.spl~//power work kill
+  SAY NAME1 @19
+  SAY NAME2 @19
+  SAY UNIDENTIFIED_DESC @20
+  SAY DESC @20
+
+COPY ~Horace/Spells/Horc09.spl~  ~override/Horc09.spl~//Spook
+  SAY NAME1 @21
+  SAY NAME2 @21
+  SAY UNIDENTIFIED_DESC @22
+  SAY DESC @22
+
+
+
+COPY ~Horace/cre/Hor07.cre~ ~override/Hor07.cre~
+COPY ~Horace/VVC/BBlade1.vvc~  ~override/BBlade1.vvc~
+COPY ~Horace/VVC/BBlade2.vvc~  ~override/BBlade2.vvc~
+COPY ~Horace/VVC/mantra.vvc~  ~override/mantra.vvc~ //Mantra of death - Uses DESTRUH.BAM
+COPY ~Horace/VVC/S#Eye.vvc~  ~override/s#Eye.vvc~ //Evil Eye - Uses S#Eye.BAM
+COPY ~Horace/VVC/S#Anc1.vvc~  ~override/S#Anc1.vvc~
+COPY ~Horace/VVC/S#Anc2.vvc~  ~override/S#Anc2.vvc~
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+//  ~~ Creature transfer, more in hope then expectation! ~~             //
+////\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\\\//
+
+// BWP fixpack fix applied
+COPY ~Horace/cre/Horace.cre~ ~override/Horace.cre~
+  WRITE_SHORT   0x244 0
+  WRITE_SHORT   0x246 0x4000 + ~%SeifHL%~
+  SAY NAME1 @23
+  SAY NAME2 @23
+  SAY BIO @24
+
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+//  ~~ 2da appending, more in hope then expectation! ~~             //
+////\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+APPEND ~pdialog.2da~
+~Horace     HoraceP            HoraceJ           HoraceD~
+UNLESS ~Horace~
+UNLESS ~25POST~
+
+APPEND ~pdialog.2da~
+~Horace     HoraceP            HoraceJ           HoraceD        Horc25P           Horc25J              Horc25D              Horc25~
+UNLESS ~Horace~
+IF     ~25POST~
+
+APPEND ~interdia.2da~
+~Horace    BHorace~
+UNLESS ~Horace~
+UNLESS ~25FILE~
+
+
+APPEND ~interdia.2da~
+~Horace    BHorace       BHorc25~
+UNLESS ~Horace~
+IF     ~25FILE~
+
+//\\//\\//\\//\\//\\//\\//\\//
+//  ~~ Graphics transfer! ~~//
+////\\//\\//\\//\\//\\//\\//\\
+//Please note that for the sake of TESTING I am currently transfering these individually.  I am well aware of HOW to transfer a directory!
+COPY ~Horace/Graphic/Ancient.BAM~ ~override/ancient.BAM~
+COPY ~Horace/Graphic/BBlade.BAM~ ~override/BBlade.BAM~
+COPY ~Horace/Graphic/BBlade1.BAM~ ~override/BBlade1.BAM~
+COPY ~Horace/Graphic/BBlade2.BAM~ ~override/BBlade2.BAM~
+COPY ~Horace/Graphic/DESTRUH.BAM~ ~override/DESTRUH.BAM~
+COPY ~Horace/Graphic/EEye.BAM~ ~override/EEye.BAM~
+COPY ~Horace\Graphic/HRCLOAK.BAM~ ~override/HRCLOAK.BAM~
+COPY ~Horace\Graphic/hrswd.BAM~ ~override/hrswd.BAM~
+COPY ~Horace\Graphic/Mantra.BAM~ ~override/Mantra.BAM~
+COPY ~Horace\Graphic/Mare.BAM~ ~override/Mare.BAM~
+COPY ~Horace\Graphic/S#Bone.BAM~ ~override/S#Bone.BAM~
+COPY ~Horace\Graphic/S#Curse.BAM~ ~override/S#Curse.BAM~
+COPY ~Horace\Graphic/S#Dart.BAM~ ~override/S#Dart.BAM~
+COPY ~Horace\Graphic/S#Eye.BAM~ ~override/S#Eye.BAM~
+COPY ~Horace\Graphic/SEATERA.BAM~ ~override/SEATERA.BAM~
+COPY ~Horace\Graphic/SEATERH.BAM~ ~override/SEATERH.BAM~
+COPY ~horace\Icons~ ~override~
+
+//\\//\\//\\//\\//\\//\\//\\//
+//  ~~ Portrait transfer! ~~//
+////\\//\\//\\//\\//\\//\\//\\
+//Please note that for the sake of TESTING I am currently transfering these individually.  I am well aware of HOW to transfer a directory!
+COPY ~Horace/Portraits/HoraceL.BMP~ ~override/HoraceL.BMP~
+COPY ~Horace/Portraits/HoraceS.BMP~ ~override/HoraceS.BMP~
+
+//\\//\\//\\//\\//\\//\\//\\//
+//  ~~ Items transfer! ~~   //
+////\\//\\//\\//\\//\\//\\//\\
+//Please note that for the sake of TESTING I am currently transfering these individually.  I am well aware of HOW to transfer a directory!
+COPY ~Horace/Items/S#Bone.ITM~ ~override/S#Bone.ITM~
+  SAY NAME1 @25
+  SAY NAME2 @25
+  SAY UNIDENTIFIED_DESC @26
+  SAY DESC @26
+
+COPY ~Horace/Items/S#dart.ITM~ ~override/S#dart.ITM~
+  SAY NAME1 @14
+  SAY NAME2 @14
+  SAY UNIDENTIFIED_DESC @27
+  SAY DESC @28

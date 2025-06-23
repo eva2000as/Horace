@@ -1,0 +1,135 @@
+@0    = ~Horace - BGII~
+@1    = ~Collecteur d'os~
+@2    = ~Collecteur d'os : apr鑣 avoir 閠?tu?en g閚閞al lors d'un raid ou de l'effondrement d'un tunnel, un garde de tombeau suffisamment exp閞iment?se transforme en collecteur d'os. Bien que cela ne lui arrive pas tr鑣 souvent, ils est particuli鑢ement redoutable lorsqu'ils s'agit de combattre. Plus il est vieux plus il est puissant, tout particuli鑢ement face aux cr閍tures faibles d'esprit ou qui manquent de sang-froid.
+
+Avantages :
+- Obtient un sort de hantise tous les 4 niveaux ?partir du niveau 12.
+- Obtient un sort d'apaisement tous les 4 niveaux ?partir du niveau 12.
+- Obtient un sort de mot de pouvoir mortel tous les 5 niveaux ?partir du niveau 20.
+- 100% de r閟istance aux d間鈚s de l'acide.
+
+D閟avantages :
+- P閚alit?de -3 au charisme
+- Ne peut utiliser d'arme ?deux mains
+- Ne peut utiliser l'arc long ou l'arbal鑤e~
+@3    = ~Noirceur du cauchemar~
+@4    = ~En lan鏰nt ce sort, une brume noire enveloppe le jeteur de sort et les cr閍tures voisines. Celles-ci doivent r閡ssir un jet de sauvegarde contre la p閠rification ou 阾re p閠rifi閑s, mais m阭e en cas de r閡ssite les cr閍tures s'enfuient, terroris閑s par les images cauchemardesques qu'elles voient ?l'int閞ieur de la brume.~
+@5    = ~Oeil mal閒ique~
+@6    = ~La force mal閒ique brute de cet oeil provoque la d間閚閞escence intellectuelle de sa cible : celle-ci se retrouve avec l'intelligence d'un animal. La cible doit r閡ssir un jet de sauvegarde avec une p閚alit?de -2 pour r閟ister ?cet effet.~
+@7    = ~Mal閐iction des Anciens~
+@8    = ~Ce pouvoir permet de convoquer les 鈓es d閏hues des camarades d閏閐閟 du jeteur de sort, celles-ci faisant alors subir leur col鑢e ?ses ennemis. Toute cr閍ture poss閐ant moins de 60 points de vie est tu閑 instantan閙ent. Si elle poss鑔e plus de 60 points de vie, elle doit r閡ssir un jet de sauvegarde avec une p閚alit?de -2 pour 関iter de mourir.~
+@9    = ~Mantra de la Mort~
+@10   = ~En lan鏰nt ce sort, le jeteur de sorts acquiert une r閟istance ?la magie de 100 % pour une dur閑 de 5 tours.~
+@11   = ~Barri鑢e d'os~
+@12   = ~Un ma顃re mort-vivant utilise sa science des morts-vivants pour 閞iger autour de lui une barri鑢e d閒ensive. Active pour une dur閑 de 10 rounds, les cr閍tures tentant de la franchir subissent 8D8 de d間鈚s.~
+@13   = ~Fl閏hette d'os~
+@14   = ~Fl閏hette d'os~
+@15   = ~En utilisant ce pouvoir, le jeteur de sort cr閑 20 fl閏hettes faites d'os d閏ompos?et infect?d'une maladie. Toute cr閍ture touch閑 doit r閡ssir un jet de sauvegarde contre les sorts ou perdre 2 points de dext閞it?et 阾re ralentie pour 1 round.~
+@16   = ~Transformation en golem d'os~
+@17   = ~En utilisant ce pouvoir, le collecteur d'os obtient la capacit?d'閠endre et d'agrandir sa forme physique, se transformant en un impressionnant golem d'os, bien plus efficace au combat.~
+@18   = ~En utilisant ce pouvoir, le collecteur d'os obtient la capacit?d'閠endre et d'agrandir sa forme physique, se transformant en un impressionnant golem d'os, bien plus efficace au combat.~
+@19   = ~Mot de pouvoir mortel~
+@20   = ~Ce pouvoir, rarement rencontr?pour des cr閍tures ne poss閐ant pas le savoir incarn? permet au collecteur d'os d'accomplir sa t鈉he en tuant automatiquement les cr閍tures les plus faibles.~
+@21   = ~Hantise~
+@22   = ~Ce pouvoir est identique au sort de magicien Hantise.~
+@23   = ~Horace~
+@24   = ~Lorsque vous l'interrogez sur son pass?HORACE semble incapable de vous donner une r閜onse claire, non par malice ou parce qu'il ne vous fait pas confiance mais parce qu'il n'arrive pas ?s'en souvenir. Malgr?cette amn閟ie, son esprit est bien vif et c'est litt閞alement ce qui le fait vivre ! Il garde foi en la puissance de sa m閙oire et en particulier ses m閠hodes mn閙otechniques, avec un fervent espoir de se rappeler un jour qui il est.~
+@25   = ~Griffe du golem d'os~
+@26   = ~Une griffe de golem d'os qui cause des d間鈚s perforants suppl閙entaires.~
+@27   = ~Un morceau d'os endommag?~
+@28   = ~Produit par le sort "Cr閍tion de fl閏hette d'os", cet os est couvert d'une substance cireuse jaun鈚re qui inflige une maladie ?toute cr閍ture qui rentre en contact avec elle. La victime subit une p閚alit?de -2 ?la dext閞it?pour 1 tour.~
+@29 = ~Collecteur d'os~
+
+// WeiDU prompts
+@-1000= "Le mod %TP2_FILE_NAME% contient"
+@-1001= "composants optionnels distincts.
+Pour gagner du temps, vous pouvez choisir ce que vous souhaitez faire d'eux
+au niveau general plutot que de repondre aux questions pour chacun.
+"
+@-1002= "Que faut-il faire de tous les composants qui NE sont PAS ENCORE installes ?
+Les [I]nstaller, les [S]auter, dem[A]nder pour chacun ? "
+@-1003= "Que faut-il faire de tous les composants qui sont DEJA installes ?
+Les [R]einstaller, les s[U]pprimer, les [S]auter, dem[A]nder pour chacun ? "
+
+@-1004= "S'IL VOUS PLAIT, envoyez par e-mail le fichier"
+@-1005= "a"
+
+@-1006= "Installer le composant ["
+@-1007= "] ?
+[R]einstaller, co[N]server, s[U]pprimer ou [Q]uitter ? "
+@-1008= "] ?
+[I]nstaller, [N]e pas installer ou [Q]uitter ? "
+
+@-1009= "Entrez une partie du nom du module : "
+
+@-1010= "Reinstallation du composant ["
+@-1011= "] "
+@-1012= "Reinstallation dans la langue"
+
+@-1013= "Suppression de l'ancienne installation de ["
+@-1014= "] au prealable..."
+@-1015= "SUPPRESSION REUSSIE DE L'ANCIEN"
+
+@-1016= "Installation en cours"
+@-1017= "ERREUR pendant l'installation de ["
+@-1018= "], retour a l'etat anterieur"
+@-1019= "INSTALLATION REUSSIE"
+@-1020= "Saute"
+@-1021= "Suppression de ["
+@-1022= "] (composant #"
+@-1023= ")"
+@-1024= "SUPPRESSION REUSSIE DE ["
+
+@-1025= "] ?
+[R]einstaller, co[N]server, s[U]pprimer, [Q]uitter ou choisir un parmi :"
+@-1026= "] ?
+[N]e pas installer, [Q]uitter ou choisir un parmi :"
+@-1027= " (installe actuellement)"
+
+@-1028= "Souhaitez-vous afficher les composants de ["
+@-1029= "] ?
+[Y]Oui, [N]on ? "
+
+@-1030= "] ?
+choisir un parmi :"
+@-1031= "] ?
+[R]einstaller, co[N]server, [Q]uitter ou choisir un parmi :"
+@-1032= "INSTALLATION ECHOUEE A CAUSE D'ERREURS"
+@-1033= "INSTALLATION AVEC DES ALERTES"
+@-1034= "Souhaitez-vous afficher les instructions (ReadMe) ? [Y]Oui [N]on"
+@-1035= "Dans la langue"
+
+@-1036= "Saute le GROUPE ["
+@-1037= "] pour cause d'absence des pre-requis."
+
+@-1038= "dem[A]nder pour chaque composant, tout [S]auter, ou choisir une selection pre-definie :"
+@-1039= "dem[A]nder pour chaque composant, [R]einstaller la configuration courante, tout s[U]pprimer, tout [S]auter, ou choisir une selection pre-definie :"
+
+@-1040= "
+Veuillez choisir la langue dans laquelle vous souhaitez jouer au jeu.
+Si par la suite vous desirez jouer au jeu dans une langue differente, il vous
+faudra editer le fichier weidu.conf et reinstaller vos mods.
+"
+@-1041= "Tcheque"
+@-1042= "Allemand"
+@-1043= "Anglais"
+@-1044= "Espagnol"
+@-1045= "Francais"
+@-1046= "Italien"
+@-1047= "Polonais"
+@-1048= "Portugais"
+@-1049= "Turc"
+@-1050= "Japonais"
+@-1051= "Coreen"
+@-1052= "Chinois simplifie"
+@-1053= "Russe"
+@-1054= "Ukrainien"
+
+@-1060= "
+Ce jeu est disponible en plusieurs langues mais WeiDU ne sait pas laquelle a ete choisie quand ce mod a ete installe.
+
+Veuillez indiquer quelle langue du jeu a ete utilisee quand vous avez installe ce mod. Votre choix servira jusqu'a ce que WeiDU s'arrete mais ne sera pas memorise.
+"
+@-1061= "
+Utilisation de"
+@-1062= " et "

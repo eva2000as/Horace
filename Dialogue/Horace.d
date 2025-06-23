@@ -1,0 +1,103 @@
+BEGIN ~HORACE~
+
+IF ~NumTimesTalkedTo(0)~ THEN BEGIN 0 // from:
+ SAY @0
+ IF ~~ THEN REPLY @1 EXIT
+ IF ~~ THEN REPLY @2 GOTO 1
+ IF ~~ THEN REPLY @3 GOTO 3
+END
+
+IF ~~ THEN BEGIN 1 // from: 0
+ SAY @4
+ IF ~~ THEN REPLY @5 EXIT
+ IF ~~ THEN REPLY @6 GOTO 2
+ IF ~~ THEN REPLY @7 GOTO 3
+END
+
+IF ~~ THEN BEGIN 2 //from: 1
+ SAY @8
+ IF ~~ THEN REPLY @9 GOTO 3
+ IF ~~ THEN REPLY @10 GOTO 3
+END
+
+IF ~~ THEN BEGIN 3 //from: 0.3, 1.3, 2
+ SAY @11
+    =
+     @12
+    =
+     @13
+ IF ~~ THEN REPLY @14 GOTO 4
+END
+
+IF ~~ THEN BEGIN 4 //from: 4.0
+ SAY @15
+ IF ~~ THEN REPLY @16 GOTO 7
+ IF ~~ THEN REPLY @17 GOTO 5
+ IF ~~ THEN REPLY @18 GOTO 6
+ IF ~~ THEN REPLY @19 GOTO 9
+END
+
+IF ~~ THEN BEGIN 5 //from 4.2
+ SAY @20
+ IF ~~ THEN GOTO 7
+END
+
+IF ~~ THEN BEGIN 6 //from 4.2
+ SAY @21
+ IF ~~ THEN REPLY @22 GOTO 7
+END
+
+IF ~~ THEN BEGIN 7 //from: 4.1, 5, 6
+ SAY @23
+ IF ~~ THEN REPLY @24 GOTO 8
+ IF ~~ THEN REPLY @25 GOTO 9
+END
+
+IF ~~ THEN BEGIN 8 //from: 7
+ SAY @26
+ IF ~GlobalLT("Chapter","GLOBAL",4)~ THEN REPLY @27 GOTO 10
+ IF ~GlobalLT("Chapter","GLOBAL",7)~ THEN REPLY @28 GOTO 11
+ IF ~~ THEN REPLY @29 GOTO 12
+ IF ~~ THEN REPLY @30 GOTO 9
+END
+
+IF ~~ THEN BEGIN 9 //from: 4.4, 7.2, 8.4
+ SAY @31
+IF ~~ THEN DO ~ChangeEnemyAlly(Myself,EVILCUTOFF)
+ ENEMY()
+ Attack(NearestEnemyOf(Myself))~ EXIT
+END
+
+IF ~~ THEN BEGIN 10 //from: 8.1
+ SAY @32
+IF ~~ THEN DO ~SetGlobal("HoraceJoined","LOCALS",1)
+JoinParty()~
+EXIT
+END
+
+IF ~~ THEN BEGIN 11 //from 8.2
+ SAY @33
+IF ~~ THEN DO ~SetGlobal("HoraceJoined","LOCALS",1)
+JoinParty()~
+EXIT
+END
+
+IF ~~ THEN BEGIN 12 //from 8.3
+ SAY @34
+ IF ~~ THEN EXIT
+END
+
+IF ~NumTimesTalkedToGT(0)~ THEN BEGIN 13
+ SAY @35
+ IF ~~ THEN REPLY @36
+DO ~SetGlobal("HoraceJoined","LOCALS",1)
+JoinParty()~
+EXIT
+ IF ~~ THEN REPLY @37 GOTO 13a
+END
+
+IF ~~ THEN BEGIN 13a
+ SAY @38
+ IF ~~ THEN EXIT
+END
+

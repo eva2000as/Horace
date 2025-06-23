@@ -1,0 +1,17 @@
+IF
+	InParty(Myself)
+	Gender(Myself,MALE)
+	InParty("Horace")
+	See("Horace")
+	!Dead("Horace") // Horace
+	!StateCheck("Horace",STATE_SLEEPING)
+	HPPercentLT(Myself,35)
+	!HP(Myself,1)
+	CombatCounter(0)
+		Global("EdwintalksHoraceJames","LOCALS",0)
+THEN
+	RESPONSE #100
+		Interact("Aerie")
+		SetGlobal("EdwintalksHoraceJames","LOCALS",1)
+		END
+		

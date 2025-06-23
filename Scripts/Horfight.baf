@@ -1,0 +1,919 @@
+IF
+  See(NearestEnemyOf(Myself))
+  Global("HorCombat","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HorCombat","GLOBAL",1)
+    SetGlobal("HorPrep","LOCALS",0)
+    SetGlobal("HAssess","LOCALS",0)
+    SetGlobal("HorTarget","LOCALS",0)
+    SetGlobal("HorPotn","LOCALS",2)
+    SetGlobal("HorRem","LOCALS",0)
+    SetGlobal("HReturnCbt","LOCALS",0)
+    SetGlobal("HPotionT","LOCALS",0)
+    SetGlobal("HOREquip","LOCALS",0)
+    SetGlobal("HORTransf","LOCALS",0)
+    SetGlobal("HORRange","LOCALS",0)
+    SetGlobal("HORClose","LOCALS",0)
+    SetGlobalTimer("HORTIMER","GLOBAL",3000)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  HasItemEquiped("S#DART",Myself)
+  !Range(NearestEnemyOf(Myself),10)
+  Global("HORRange","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORRange","LOCALS",1)
+    EquipRanged()
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  OR(2)
+  !HasItemEquiped("S#DART",Myself)
+  Range(NearestEnemyOf(Myself),10)
+  Global("HORClose","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORClose","LOCALS",1)
+    EquipMostDamagingMelee()
+END
+
+IF
+  CombatCounter(0)
+  Global("HORCombat","GLOBAL",1)
+  !Detect([EVILCUTOFF])
+  OR(2)
+  Global("HORActive","GLOBAL",2)
+  Global("HORActive","GLOBAL",5)
+THEN
+  RESPONSE #100
+    SetGlobal("HORActive","GLOBAL",1)
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  !CheckStat(Myself,1,SCRIPTINGSTATE4)
+  !HPPercentLT(Myself,30)
+  OR(3)
+  LevelGT(NearestEnemyOf(Myself),4)
+  LevelGT(ThirdNearestEnemyOf(Myself),4)
+  LevelGT(SixthNearestEnemyOf(Myself),4)
+  HaveSpellRES("SPCL152")
+  Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    SpellRES("SPCL152",Myself)  // ~Rage du barbare~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  !HPPercentLT(Myself,30)
+  CheckStatLT(Myself,50,RESISTMAGIC)
+  OR(3)
+  LevelGT(NearestEnemyOfType([0.0.0.MAGE_ALL]),12)
+  LevelGT(NearestEnemyOfType([0.0.0.CLERIC_ALL]),12)
+  LevelGT(NearestEnemyOfType([0.0.0.DRUID_ALL]),12)
+  HaveSpellRES("HOR04")
+  Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    SpellRES("HOR04",Myself)  // HOR04
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  !HPPercentLT(Myself,30)
+  CheckStatLT(Myself,50,RESISTMAGIC)
+  OR(3)
+  LevelGT(NearestEnemyOfType([0.0.0.MAGE_ALL]),12)
+  LevelGT(NearestEnemyOfType([0.0.0.CLERIC_ALL]),12)
+  LevelGT(NearestEnemyOfType([0.0.0.DRUID_ALL]),12)
+  !HaveSpellRES("HOR04")
+  HasItem("POTN11",Myself)  // ~Potion d'invulnérabilité~
+  Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,UseItem("POTN11",Myself))  // ~Potion d'invulnérabilité~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  !HPPercentLT(Myself,30)
+  HaveSpellRES("HOR03")
+  !LevelLT(NearestEnemyOf(Myself),5)
+  HPLT(NearestEnemyOf(Myself),60)
+  Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HOR03",NearestEnemyOf(Myself)))  // HOR03
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  !HPPercentLT(Myself,30)
+  !LevelLT(NearestEnemyOf(Myself),5)
+  HaveSpellRES("HORC08")
+  HPLT(NearestEnemyOf(Myself),60)
+  Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HORC08",NearestEnemyOf(Myself)))  // HORC08
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  NumCreatureGT([ENEMY],3)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !LevelLT(NearestEnemyOf(Myself),5)
+  Global("HORPrep","LOCALS",0)
+  HaveSpellRES("HOR01")
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HOR01",NearestEnemyOf(Myself)))  // HOR01
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+  See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+  LevelGT(NearestEnemyOfType([0.0.0.MAGE_ALL]),12)
+  HaveSpellRES("HOR02")
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HOR02",NearestEnemyOfType([0.0.0.MAGE_ALL])))  // HOR02
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+  See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+  LevelGT(NearestEnemyOfType([0.0.0.CLERIC_ALL]),12)
+  HaveSpellRES("HOR02")
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HOR02",NearestEnemyOfType([0.0.0.CLERIC_ALL])))  // HOR02
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+  See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+  LevelGT(NearestEnemyOfType([0.0.0.DRUID_ALL]),12)
+  HaveSpellRES("HOR02")
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HOR02",NearestEnemyOfType([0.0.0.DRUID_ALL])))  // HOR02
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+  !StateCheck(NearestEnemyOf(Myself),STATE_PANIC)
+  !StateCheck(NearestEnemyOf(Myself),STATE_HELPLESS)
+  !StateCheck(NearestEnemyOf(Myself),STATE_CONFUSED)
+  HaveSpellRES("HORC09")
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HORC09",NearestEnemyOf(Myself)))  // HORC09
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  CheckStatLT(Myself,21,STR)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+  HasItem("POTN07",Myself)  // ~Potion de force de géant des tempêtes~
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,UseItem("POTN07",Myself))  // ~Potion de force de géant des tempêtes~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  CheckStatLT(Myself,21,STR)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+  HasItem("POTN06",Myself)  // ~Potion de force de géant des nuages~
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,UseItem("POTN06",Myself))  // ~Potion de force de géant des nuages~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  CheckStatLT(Myself,21,STR)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+  HasItem("POTN05",Myself)  // ~Potion de force de géant du feu~
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,UseItem("POTN05",Myself))  // ~Potion de force de géant du feu~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  CheckStatLT(Myself,21,STR)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+  HasItem("POTN04",Myself)  // ~Potion de force de géant du froid~
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,UseItem("POTN04",Myself))  // ~Potion de force de géant du froid~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  CheckStatLT(Myself,19,STR)
+  Global("HORPrep","LOCALS",0)
+  HasItem("POTN03",Myself)  // ~Potion de force de géant des collines~
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    ActionOverride(Myself,UseItem("POTN03",Myself))  // ~Potion de force de géant des collines~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  OR(2)
+  Global("HORActive","GLOBAL",1)
+  Global("HORActive","GLOBAL",5)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORPrep","LOCALS",1)
+    SetGlobalTimer("HORTIMER","GLOBAL",1)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  CombatCounter(0)
+  Global("HORCombat","GLOBAL",1)
+  OR(1)
+  !Detect([EVILCUTOFF])
+THEN
+  RESPONSE #100
+    SetGlobal("HORCombat","GLOBAL",0)
+    SetGlobal("HAssess","LOCALS",0)
+    SetGlobal("HORPrep","LOCALS",0)
+    SetGlobal("HORPotn","LOCALS",0)
+    SetGlobal("HORRem","LOCALS",0)
+    SetGlobal("HReturnCbt","LOCALS",0)
+    SetGlobal("HPotionT","LOCALS",0)
+    SetGlobal("HOREquip","LOCALS",0)
+    SetGlobal("HORRange","LOCALS",0)
+    SetGlobal("HORClose","LOCALS",0)
+    SetGlobal("HORTransf","LOCALS",0)
+    SetGlobalTimer("HORTIMER","GLOBAL",3000)
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  Global("HORActive","GLOBAL",1)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  HPPercentLT(Myself,50)
+  See(NearestEnemyOf(Myself))
+  HasItem("Potn55",Myself)  // ~Potion de soin majeur~
+  !Global("HORPrep","LOCALS",0)
+  Global("HORPotn","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORPotn","LOCALS",1)
+    DisplayStringHead(Myself,46150)  // ~avale une potion~
+    UseItem("Potn55",Myself)  // ~Potion de soin majeur~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),12)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  Global("HORActive","GLOBAL",1)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  HPPercentLT(Myself,50)
+  See(NearestEnemyOf(Myself))
+  !HasItem("Potn55",Myself)  // ~Potion de soin majeur~
+  HasItem("Potn52",Myself)  // ~Potion de grands soins~
+  !Global("HORPrep","LOCALS",0)
+  Global("HORPotn","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORPotn","LOCALS",1)
+    DisplayStringHead(Myself,46150)  // ~avale une potion~
+    UseItem("Potn52",Myself)  // ~Potion de grands soins~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),12)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  Global("HORActive","GLOBAL",1)
+  !CheckStatLT(Myself,7,INT)
+  !HPPercentLT(Myself,30)
+  StateCheck(Myself,STATE_POISONED)
+  See(NearestEnemyOf(Myself))
+  HasItem("Potn17",Myself)  // ~Elixir de santé~
+  !Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150)  // ~avale une potion~
+    UseItem("Potn17",Myself)  // ~Elixir de santé~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),12)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  Global("HORActive","GLOBAL",1)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !CheckStat(Myself,1,SCRIPTINGSTATE4)
+  OR(3)
+  LevelGT(NearestEnemyOf(Myself),4)
+  LevelGT(ThirdNearestEnemyOf(Myself),4)
+  LevelGT(SixthNearestEnemyOf(Myself),4)
+  !Global("HORPrep","LOCALS",0)
+  HaveSpellRES("SPCL152")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("SPCL152",Myself))  // ~Rage du barbare~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  !HPPercentLT(Myself,30)
+  CheckStatLT(Myself,50,RESISTMAGIC)
+  OR(3)
+  LevelGT(NearestEnemyOfType([0.0.0.MAGE_ALL]),12)
+  LevelGT(NearestEnemyOfType([0.0.0.CLERIC_ALL]),12)
+  LevelGT(NearestEnemyOfType([0.0.0.DRUID_ALL]),12)
+  HaveSpellRES("HOR04")
+  !Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("HOR04",Myself))  // HOR04
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  !HPPercentLT(Myself,30)
+  CheckStatLT(Myself,50,RESISTMAGIC)
+  OR(3)
+  LevelGT(NearestEnemyOfType([0.0.0.MAGE_ALL]),12)
+  LevelGT(NearestEnemyOfType([0.0.0.CLERIC_ALL]),12)
+  LevelGT(NearestEnemyOfType([0.0.0.DRUID_ALL]),12)
+  !HaveSpellRES("HOR04")
+  HasItem("POTN11",Myself)  // ~Potion d'invulnérabilité~
+  !Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,UseItem("POTN11",Myself))  // ~Potion d'invulnérabilité~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+  LevelGT(NearestEnemyOfType([0.0.0.MAGE_ALL]),12)
+  !Global("HORPrep","LOCALS",0)
+  HaveSpellRES("HOR02")
+THEN
+  RESPONSE #100
+    SpellRES("HOR02",NearestEnemyOfType([0.0.0.MAGE_ALL]))  // HOR02
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+  LevelGT(NearestEnemyOfType([0.0.0.CLERIC_ALL]),12)
+  !Global("HORPrep","LOCALS",0)
+  HaveSpellRES("HOR02")
+THEN
+  RESPONSE #100
+    SpellRES("HOR02",NearestEnemyOfType([0.0.0.CLERIC_ALL]))  // HOR02
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+  LevelGT(NearestEnemyOfType([0.0.0.DRUID_ALL]),12)
+  !Global("HORPrep","LOCALS",0)
+  HaveSpellRES("HOR02")
+THEN
+  RESPONSE #100
+    SpellRES("HOR02",NearestEnemyOfType([0.0.0.DRUID_ALL]))  // HOR02
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  LevelGT(NearestEnemyOf(Myself),4)
+  !Global("HORPrep","LOCALS",0)
+  HaveSpellRES("HOR03")
+  HPLT(NearestEnemyOf(Myself),60)
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("HOR03",NearestEnemyOf(Myself)))  // HOR03
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  LevelGT(NearestEnemyOf(Myself),4)
+  !Global("HORPrep","LOCALS",0)
+  HaveSpellRES("HORC08")
+  HPLT(LastSeenBy(Myself),60)
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("HORC08",NearestEnemyOf(Myself)))  // HORC08
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackOneRound(NearestEnemyOf(Myself))
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  NumCreatureGT([ENEMY],2)
+  OR(3)
+  LevelGT(NearestEnemyOf(Myself),4)
+  LevelGT(ThirdNearestEnemyOf(Myself),4)
+  LevelGT(SixthNearestEnemyOf(Myself),4)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !Global("HORPrep","LOCALS",0)
+  HaveSpellRES("HOR01")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("HOR01",NearestEnemyOf(Myself)))  // HOR01
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !Global("HORPrep","LOCALS",0)
+  StateCheck(Player1,STATE_PANIC)
+  HaveSpellRES("SPCL222")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("SPCL222",Player1))  // ~Apaisement~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !Global("HORPrep","LOCALS",0)
+  StateCheck(Player2,STATE_PANIC)
+  HaveSpellRES("SPCL222")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("SPCL222",Player2))  // ~Apaisement~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !Global("HORPrep","LOCALS",0)
+  StateCheck(Player3,STATE_PANIC)
+  HaveSpellRES("SPCL222")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("SPCL222",Player3))  // ~Apaisement~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !Global("HORPrep","LOCALS",0)
+  StateCheck(Player4,STATE_PANIC)
+  HaveSpellRES("SPCL222")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("SPCL222",Player4))  // ~Apaisement~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !Global("HORPrep","LOCALS",0)
+  StateCheck(Player5,STATE_PANIC)
+  HaveSpellRES("SPCL222")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("SPCL222",Player5))  // ~Apaisement~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !Global("HORPrep","LOCALS",0)
+  StateCheck(Player6,STATE_PANIC)
+  HaveSpellRES("SPCL222")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("SPCL222",Player6))  // ~Apaisement~
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  !StateCheck(NearestEnemyOf(Myself),STATE_PANIC)
+  !StateCheck(NearestEnemyOf(Myself),STATE_HELPLESS)
+  !StateCheck(NearestEnemyOf(Myself),STATE_CONFUSED)
+  !Global("HORPrep","LOCALS",0)
+  HaveSpellRES("HORC09")
+THEN
+  RESPONSE #100
+    ActionOverride(Myself,SpellRES("HORC09",NearestEnemyOf(Myself)))  // HORC09
+    SetGlobalTimer("HORTIMER","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  OR(2)
+  Global("HORActive","GLOBAL",1)
+  Global("HORActive","GLOBAL",5)
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  See(NearestEnemyOf(Myself))
+  !Global("HORPrep","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("HORTIMER","GLOBAL",1)
+    AttackOneRound(NearestEnemyOf(Myself))
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  !Global("HORActive","GLOBAL",2)
+  See(NearestEnemyOf(Myself))
+  !HPPercentLT(Myself,30)
+  !CheckStatLT(Myself,7,INT)
+  GlobalTimerNotExpired("HORTIMER","GLOBAL")
+  !Global("HORPrep","LOCALS",0)
+  ActionListEmpty()
+THEN
+  RESPONSE #100
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  CheckStatLT(Myself,7,INT)
+  HaveSpellRES("HOR07")
+  Global("HORTransf","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORTransf","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HOR07",Myself))  // HOR07
+    SetGlobalTimer("HORTimer","GLOBAL",6)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !HaveSpellRES("HOR07")
+  See(NearestEnemyOf(Myself))
+  CheckStatLT(Myself,7,INT)
+  PartyHasItem("Potn10")  // ~Potion d'invisibilité~
+  !InventoryFull(Myself)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,49763)  // ~J'ai besoin d'aide.~
+    TakePartyItem("potn10")
+    UseItem("Potn10",Myself)  // ~Potion d'invisibilité~
+    RunAwayFrom(LastAttackerOf(Myself),150)
+END
+
+IF
+  Global("HORActive","GLOBAL",1)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !HaveSpellRES("HOR07")
+  See(NearestEnemyOf(Myself))
+  CheckStatLT(Myself,7,INT)
+  !HasItem("Potn10",Myself)  // ~Potion d'invisibilité~
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,49763)  // ~J'ai besoin d'aide.~
+    RunAwayFrom(LastAttackerOf(Myself),150)
+END
+
+IF
+  HPPercentLT(Myself,30)
+  Global("HORActive","GLOBAL",1)
+  See(NearestEnemyOf(Myself))
+  HaveSpellRES("HOR07")
+  Global("HORTransf","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HORTransf","LOCALS",1)
+    ActionOverride(Myself,SpellRES("HOR07",Myself))  // HOR07
+    SetGlobalTimer("HORTimer","GLOBAL",6)
+    AttackOneRound(NearestEnemyOf(Myself))
+END
+
+IF
+  HPPercentLT(Myself,30)
+  Global("HORActive","GLOBAL",1)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !HaveSpellRES("HOR07")
+  PartyHasItem("potn10")  // ~Potion d'invisibilité~
+  Global("HPotionT","LOCALS",0)
+  !InventoryFull(Myself)
+THEN
+  RESPONSE #100
+    SetGlobal("HPotionT","LOCALS",1)
+    SetGlobal("HORActive","GLOBAL",2)
+    TakePartyItem("potn10")
+    UseItem("potn10",Myself)  // ~Potion d'invisibilité~
+    DisplayStringHead(Myself,49763)  // ~J'ai besoin d'aide.~
+    RunAwayFrom(LastAttackerOf(Myself),150)
+END
+
+IF
+  HPPercentLT(Myself,30)
+  Global("HORActive","GLOBAL",1)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !HaveSpellRES("HOR07")
+  !HasItem("potn10",Myself)  // ~Potion d'invisibilité~
+  Global("HPotionT","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("HPotionT","LOCALS",1)
+    SetGlobal("HORActive","GLOBAL",2)
+    DisplayStringHead(Myself,49763)  // ~J'ai besoin d'aide.~
+    RunAwayFrom(LastAttackerOf(Myself),150)
+END
+
+IF
+  Global("HORActive","GLOBAL",2)
+  Global("HPotionT","LOCALS",1)
+  HasItem("potn55",Myself)  // ~Potion de soin majeur~
+  !CombatCounter(0)
+  HPPercentLT(Myself,40)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150)  // ~avale une potion~
+    UseItem("potn55",Myself)  // ~Potion de soin majeur~
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",2)
+  Global("HPotionT","LOCALS",1)
+  !HasItem("potn55",Myself)  // ~Potion de soin majeur~
+  HasItem("potn52",Myself)  // ~Potion de grands soins~
+  !CombatCounter(0)
+  HPPercentLT(Myself,40)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150)  // ~avale une potion~
+    UseItem("potn52",Myself)  // ~Potion de grands soins~
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",2)
+  Global("HPotionT","LOCALS",1)
+  !HasItem("potn55",Myself)  // ~Potion de soin majeur~
+  !HasItem("potn52",Myself)  // ~Potion de grands soins~
+  HasItem("potn08",Myself)  // ~Potion de soins~
+  !CombatCounter(0)
+  HPPercentLT(Myself,40)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150)  // ~avale une potion~
+    UseItem("potn08",Myself)  // ~Potion de soins~
+    Continue()
+END
+
+IF
+  Global("HORActive","GLOBAL",2)
+  Global("HPotionT","LOCALS",1)
+  !HasItem("potn55",Myself)  // ~Potion de soin majeur~
+  !HasItem("potn52",Myself)  // ~Potion de grands soins~
+  !HasItem("potn08",Myself)  // ~Potion de soins~
+  HasItem("potn42",Myself)  // ~Potion de régénération~
+  !CombatCounter(0)
+  HPPercentLT(Myself,40)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150)  // ~avale une potion~
+    UseItem("potn42",Myself)  // ~Potion de régénération~
+    Continue()
+END
+
+IF
+  HPPercentGT(Myself,40)
+  Global("HORActive","GLOBAL",2)
+THEN
+  RESPONSE #100
+    SetGlobal("HReturnCbt","LOCALS",1)
+    MoveToObject(Player1)
+    Continue()
+END
+
+IF
+  Global("HReturnCbt","LOCALS",1)
+  See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    SetGlobal("HORActive","GLOBAL",1)
+    SetGlobal("HORCombat","GLOBAL",1)
+    SetGlobal("HOEPrep","LOCALS",1)
+    SetGlobal("HHeal","LOCALS",0)
+    SetGlobal("HPotionT","LOCALS",0)
+    SetGlobal("HReturnCbt","LOCALS",0)
+    SetGlobalTimer("HORTIMER","GLOBAL",12)
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+    Continue()
+END
+
+IF
+  Global("HReturnCbt","LOCALS",1)
+  !See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    SetGlobal("HORCombat","GLOBAL",0)
+    SetGlobal("HAssess","LOCALS",0)
+    SetGlobal("HORPrep","LOCALS",0)
+    SetGlobal("HORPotn","LOCALS",0)
+    SetGlobal("HORRem","LOCALS",0)
+    SetGlobal("HReturnCbt","LOCALS",0)
+    SetGlobal("HPotionT","LOCALS",0)
+    SetGlobal("HOREquip","LOCALS",0)
+    SetGlobal("HORRange","LOCALS",0)
+    SetGlobal("HORClose","LOCALS",0)
+    SetGlobal("HORTransf","LOCALS",0)
+    SetGlobalTimer("HORTIMER","GLOBAL",3000)
+    Continue()
+END
+
+IF
+  PartyRested()
+  CombatCounter(0)
+  !Detect(NearestEnemyOf(Myself))
+  HaveSpellRES("HOR06")
+THEN
+  RESPONSE #100
+    SpellRES("HOR06",Myself)  // HOR06
+    Wait(2)
+    EquipItem("S#DART")
+END
+
